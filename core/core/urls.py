@@ -22,6 +22,8 @@ from file.views import main
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("file/", include("file.urls")),
+    path("create/", include("file.urls")),
     path("", main),
+    path("result/", include("words.urls")),
+
 ]

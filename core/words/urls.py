@@ -3,4 +3,5 @@ from django.conf.urls.static import static
 from django.conf import settings
 from .views import AnalyzedWordsListView
 
-urlpatterns = [path("result/<str: document>", AnalyzedWordsListView.as_view())]
+urlpatterns = [path("",
+                    AnalyzedWordsListView.as_view(), name="result")]
