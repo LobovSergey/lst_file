@@ -7,8 +7,9 @@
 <body>    
 
 <form enctype="multipart/form-data" method="post">
-    {% csrf_token %}
-    Format : TXT, RTF, DOC    
+    {% csrf_token %}    
+    Format : TXT, RTF, DOC   
+    
     {{ form.as_p }}
    <input type="submit" value="Отправить"></p>
 </form> 

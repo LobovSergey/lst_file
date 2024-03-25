@@ -9,9 +9,8 @@ def create_secret_key(path: str) -> str:
 
 def create_db_data(words: dict, counter_all: int, path) -> str:
     key = create_secret_key(path)
-    print(key)
     for word, count in words.items():
-        WordsModel.objects.create(word=word,
-                                  counter=count,
-                                  term_frequency=count/counter_all,
-                                  secret_key=key)
+        WordsModel.objects.create(
+            word=word, counter=count, term_frequency=count / counter_all, secret_key=key
+        )
+    return key

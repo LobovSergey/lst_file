@@ -14,8 +14,7 @@ class UploadFileForm(forms.ModelForm):
         types = ["doc", "txt", "rtf"]
         print(filename)
         if filename.split(".")[-1] not in types:
-            raise forms.ValidationError(
-                "Файл не является форматом 'doc', 'txt', 'rtf'")
+            raise forms.ValidationError("Файл не является форматом 'doc', 'txt', 'rtf'")
         return self.cleaned_data["file"]
 
     @word_analyzer
