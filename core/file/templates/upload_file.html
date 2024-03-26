@@ -6,12 +6,21 @@
 </head>
 <body>    
 
-<form action="" enctype="multipart/form-data" method="post">
-    {% csrf_token %}    
-    Format : TXT, RTF, DOC   
+<form action="" enctype="multipart/form-data" method="post" style="text-align: center">
+    {% csrf_token %}
+    
+    Выберите файл
+    </br>
+    Формат документа : TXT, RTF, DOC  
     
     {{ form.as_p }}
-   <input type="submit" value="Отправить"></p>
+    </br>
+    ИЛИ
+    </br>
+    Введите код созданного ранее документа:
+    </br>
+    <input type="text" name="secret_key"></p>
+    <input type="submit" value="Отправить"></p>
 </form> 
 
 </body>

@@ -5,9 +5,49 @@
     <title>Words</title>
 </head>
 <body>
- 
-<a href="create/">sss</a>
-    
+    <a href="{% url 'upload' %}">Назад</a>
+<div>
+    <p style="text-align: center">
+        <font size="6">        
+            Ключ вашего документа - <strong>{{ key }}</strong> 
+            </br>        
+        </font>       
+        Вы можете его сохранить, чтобы в будущем вернуться к данному документу
+    </p>
+</div>
+<div>
+    <p style="text-align: center">   
+    {% if page_obj.has_previous %}
+        <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="page-current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
+    {% if page_obj.has_next %}
+        <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+    {% endif %}
+    </p>
+ </div>
+<div>
+<p style="text-align: center">
+    Всего слов в документе:<strong> {{ counter }} </strong> (Слово имеет больше 3 букв и не обладает какими-либо разделителями)
+</p>
+<table align="center" border="1" width="50%" cellpadding="1">
+   <tr>
+    <th>Word</th>
+    <th>count</th>
+    <th>TF</th>
+   </tr>
+
+{% for object in objects %}  
+   <tr>
+    <td align="center">{{object.word}}</td>
+    <td align="center">{{object.counter}}</td>
+    <td align="center">{{object.term_frequency}}</td>
+  </tr>
+{% endfor %}
+ </table>
+
 
 </body>
 </html>

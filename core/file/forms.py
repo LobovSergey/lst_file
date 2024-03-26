@@ -7,17 +7,23 @@ from datetime import datetime
 
 
 class UploadFileForm(forms.ModelForm):
+    file = forms.FileField(required=False)
+
     class Meta:
         model = UploadFile
         fields = ["file"]
 
     def clean_file(self):
-        filename = self.cleaned_data["file"].name
-        types = ["doc", "txt", "rtf"]
-        if filename.split(".")[-1] not in types:
-            raise forms.ValidationError(
-                "Файл не является форматом 'doc', 'txt', 'rtf'")
-        return self.cleaned_data["file"]
+        try:
+            filename = self.cleaned_data["file"].name
+            types = ["doc", "txt", "rtf"]
+            if filename.split(".")[-1] not in types:
+                raise forms.ValidationError(
+                    "Файл не является форматом 'doc', 'txt', 'rtf'"
+                )
+            return self.cleaned_data["file"]
+        except AttributeError:
+            pass
 
     @word_analyzer
     def save(self, commit: bool = ...) -> Any:

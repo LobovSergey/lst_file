@@ -2,6 +2,7 @@ from datetime import datetime
 import hashlib
 from re import split
 from collections import Counter
+from core.settings import MOST_COMMON
 
 
 def hash_str(path: str) -> str:
@@ -16,11 +17,13 @@ def create_key(request):
     return key
 
 
-def prepare_data(collections):
-    result = dict(collections.most_common(51))
-    count = sum(collections.values()) - int(result[""])
-    del result[""]
-    return result, count
+def prepare_data(collections: Counter):
+    global count
+    _dict = {key: val for key, val in dict(collections).items() if len(key) > 3}
+    end_collection = Counter(_dict).most_common(MOST_COMMON)
+    ended_dict = dict(end_collection)
+    count = sum(Counter(_dict).values())
+    return ended_dict, count
 
 
 def collect_words(words: Counter, collections: Counter = None) -> list:
@@ -37,3 +40,7 @@ def read_file(path):
             words = split(r"\W|'' ", line)
             collections = collect_words(words, collections)
     return prepare_data(collections)
+
+
+def get_counter():
+    return count

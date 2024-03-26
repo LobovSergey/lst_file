@@ -7,4 +7,9 @@ class WordsModel(models.Model):
     counter = models.PositiveIntegerField()
     term_frequency = models.FloatField()
     document = models.ForeignKey(
-        UploadFile, on_delete=models.CASCADE, default=None, null=True)
+        UploadFile,
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        related_name="words",
+    )

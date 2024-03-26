@@ -1,5 +1,4 @@
 from .models import WordsModel
-from file.models import UploadFile
 
 
 def create_db_data(words: dict, counter_all: int, obj: int) -> str:

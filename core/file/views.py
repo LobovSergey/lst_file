@@ -5,13 +5,13 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET
 
-from file.functions import create_key
+from file.functions import create_key, get_counter
 from .forms import UploadFileForm
 
 
 @require_GET
 def main(request):
-    return render(request, "index.html")
+    return redirect("upload")
 
 
 class UploadFileFormView(FormView):
@@ -24,7 +24,9 @@ class UploadFileFormView(FormView):
         if form.is_valid():
             upload_file = form.save()
             key = create_key(request)
+            counter = get_counter()
             upload_file.slug = key
+            upload_file.counter_words = counter
             upload_file.save()
             return redirect("result", key=key)
         return redirect("upload")
