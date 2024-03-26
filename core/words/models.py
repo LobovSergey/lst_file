@@ -1,8 +1,10 @@
 from django.db import models
+from file.models import UploadFile
 
 
 class WordsModel(models.Model):
     word = models.CharField(max_length=50, editable=False)
     counter = models.PositiveIntegerField()
     term_frequency = models.FloatField()
-    secret_key = models.CharField(max_length=50)
+    document = models.ForeignKey(
+        UploadFile, on_delete=models.CASCADE, default=None, null=True)

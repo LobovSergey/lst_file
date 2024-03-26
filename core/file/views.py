@@ -2,10 +2,11 @@ from typing import Any
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import FormView
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET
+
+from file.functions import create_key
 from .forms import UploadFileForm
-from .decorator import get_key
 
 
 @require_GET
@@ -18,10 +19,12 @@ class UploadFileFormView(FormView):
     template_name = "upload_file.html"
     success_url = reverse_lazy("result")
 
-    def form_valid(self, form: Any) -> HttpResponse:
-        form.save()
-        return super().form_valid(form)
-
-    # @get_key
-    def get_success_url(self) -> str:
-        return super().get_success_url()
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            upload_file = form.save()
+            key = create_key(request)
+            upload_file.slug = key
+            upload_file.save()
+            return redirect("result", key=key)
+        return redirect("upload")

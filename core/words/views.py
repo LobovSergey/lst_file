@@ -1,21 +1,14 @@
 from typing import Any
+from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 from .models import WordsModel
+from file.models import UploadFile
 
 
-class AnalyzedWordsListView(ListView):
-    model = WordsModel
+class AnalyzedWordsListView(DetailView):
+    model = UploadFile
     template_name = "words_table.html"
-
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        r = request.GET.get("key")
-        return HttpResponse(f"{r}")
-
-    def get_queryset(self) -> QuerySet[Any]:
-
-        queryset = WordsModel.objects.get_queryset(secret_key="")
-
-        return queryset
+    slug_url_kwarg = "key"

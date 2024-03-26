@@ -1,16 +1,9 @@
 from .models import WordsModel
-import hashlib
+from file.models import UploadFile
 
 
-def create_secret_key(path: str) -> str:
-    bytes_str = path.encode()
-    return hashlib.sha1(bytes_str).hexdigest()
-
-
-def create_db_data(words: dict, counter_all: int, path) -> str:
-    key = create_secret_key(path)
+def create_db_data(words: dict, counter_all: int, obj: int) -> str:
     for word, count in words.items():
         WordsModel.objects.create(
-            word=word, counter=count, term_frequency=count / counter_all, secret_key=key
+            word=word, counter=count, term_frequency=count / counter_all, document=obj
         )
-    return key
