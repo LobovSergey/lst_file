@@ -23,7 +23,7 @@ class UploadFileForm(forms.ModelForm):
                 )
             return self.cleaned_data["file"]
         except AttributeError:
-            pass
+            return self.cleaned_data["file"]
 
     @word_analyzer
     def save(self, commit: bool = ...) -> Any:

@@ -19,7 +19,8 @@ def create_key(request):
 
 def prepare_data(collections: Counter):
     global count
-    _dict = {key: val for key, val in dict(collections).items() if len(key) > 3}
+    _dict = {key: val for key, val in dict(
+        collections).items() if len(key) > 3}
     end_collection = Counter(_dict).most_common(MOST_COMMON)
     ended_dict = dict(end_collection)
     count = sum(Counter(_dict).values())
@@ -34,7 +35,7 @@ def collect_words(words: Counter, collections: Counter = None) -> list:
 
 def read_file(path):
     collections = Counter("")
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, "r", encoding="UTF-8") as f:
         for line in f:
             line = line.title()
             words = split(r"\W|'' ", line)

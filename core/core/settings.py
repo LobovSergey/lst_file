@@ -122,8 +122,8 @@ MOST_COMMON = 50
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-MEDIA_URL = "/files/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "files")
+MEDIA_URL = "/uploaded_files/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded_files")
 
 
 # Default primary key field type

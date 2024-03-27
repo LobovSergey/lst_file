@@ -1,10 +1,10 @@
 from typing import Any
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
-from django.http import Http404
-from django.views.generic import DetailView, ListView
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import ListView
 from file.models import UploadFile
-from .models import WordsModel
 
 
 class AnalyzedWordsListView(ListView):
@@ -13,11 +13,18 @@ class AnalyzedWordsListView(ListView):
     paginate_by = 10
     context_object_name = "objects"
 
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        try:
+
+            return super().get(request, *args, **kwargs)
+        except Exception:
+            return render(request, "404.html")
+
     def get_queryset(self) -> QuerySet[Any]:
         global key
         global counter
         key = self.kwargs.get(self.slug_url_kwarg, None)
-        object = UploadFile.objects.get(slug=key)
+        object = get_object_or_404(UploadFile, slug=key)
         counter = object.counter_words
         queryset = object.words.all().order_by("-term_frequency")
         return queryset

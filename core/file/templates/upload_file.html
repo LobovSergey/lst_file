@@ -15,13 +15,18 @@
     
     {{ form.as_p }}
     </br>
+
     ИЛИ
     </br>
     Введите код созданного ранее документа:
     </br>
-    <input type="text" name="secret_key"></p>
+    <input type="text" name="secret_key"></p>  
     <input type="submit" value="Отправить"></p>
-</form> 
-
+</form>
+<p style="text-align: center">
+    <font size="6" color="red">
+    {{ error }}
+    </font>
+</p>
 </body>
 </html>
